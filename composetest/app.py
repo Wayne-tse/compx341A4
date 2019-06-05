@@ -46,7 +46,7 @@ def hello():
 @app.route('/isPrime/<int:prime>')
 def isPrime(prime):
     if PrimeTest(prime):
-        cache.append('primes',str(prime) + '\n')
+        cache.sadd('primes',prime)
         return "{} is prime\n".format(prime), 200
     else:
         return "{} is not prime\n".format(prime), 200
@@ -54,4 +54,18 @@ def isPrime(prime):
 
 @app.route('/primesStored')
 def PrimeStored():
-    return cache.get('primes'), 200
+    dbPrimes = cache.smembers('primes')
+    string = ""
+    if len(dbPrimes) == 0:
+        return "Database is empty"
+    for var in dbPrimes:
+        string += var.decode("utf-8")
+        string += '\n'
+
+    return string, 200
+
+
+@app.route('/clear')
+def Clear():
+    cache.flushdb()
+    return "Cleared database", 200
