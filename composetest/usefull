@@ -1,0 +1,17 @@
+usefull commands 
+
+
+build web images and test images:
+docker-compose up
+docker-compose build && docker-compose up
+docker-compose -f docker-compose.test.yml -p ci build
+
+fresh testing environment by executing:
+docker-compose -f docker-compose.test.yml -p ci up -d
+
+output of sut:
+docker logs -f ci_sut_1
+
+
+verify sut:
+docker wait ci_sut_1
