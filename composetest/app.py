@@ -57,7 +57,7 @@ def PrimeStored():
     dbPrimes = cache.smembers('primes')
     string = ""
     if len(dbPrimes) == 0:
-        return "Database is empty"
+        return "Database is empty\n"
     for var in dbPrimes:
         string += var.decode("utf-8")
         string += '\n'
@@ -68,4 +68,4 @@ def PrimeStored():
 @app.route('/clear')
 def Clear():
     cache.flushdb()
-    return "Cleared database", 200
+    return "Cleared database\n", 200
